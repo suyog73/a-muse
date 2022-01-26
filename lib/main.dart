@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:music_app_work/screen/LoginScreen.dart';
+import 'package:music_app_work/screen/room_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(primarySwatch: Colors.blue, fontFamily: 'OpenSans'),
-      home: const LoginScreen(),
+      home: const RoomScreen(),
     );
   }
 }

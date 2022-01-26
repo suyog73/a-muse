@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:music_app_work/helpers/constants.dart';
+import 'package:music_app_work/screen/room_screen.dart';
 import 'package:music_app_work/widget/my_button.dart';
 import 'package:music_app_work/widget/my_text_field.dart';
 
@@ -62,7 +63,16 @@ class LoginScreen extends StatelessWidget {
                         ],
                       ),
                       SizedBox(height: 151.7 / 3),
-                      MyButton(),
+                      InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => RoomScreen(),
+                              ),
+                            );
+                          },
+                          child: MyButton()),
                       SizedBox(height: 112.7 / 3),
                       Column(
                         children: [
