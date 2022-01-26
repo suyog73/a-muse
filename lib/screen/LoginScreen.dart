@@ -1,9 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:music_app_work/helpers/constants.dart';
-import 'package:music_app_work/screen/room_screen.dart';
+import 'package:music_app_work/screen/bottom_nav.dart';
 import 'package:music_app_work/widget/my_button.dart';
 import 'package:music_app_work/widget/my_text_field.dart';
 
@@ -68,11 +67,13 @@ class LoginScreen extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => RoomScreen(),
+                                builder: (context) => BottomNav(),
                               ),
                             );
                           },
-                          child: MyButton()),
+                          child: MyButton(
+                            text: 'Log In',
+                          )),
                       SizedBox(height: 112.7 / 3),
                       Column(
                         children: [

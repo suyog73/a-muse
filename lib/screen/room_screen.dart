@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:music_app_work/helpers/constants.dart';
+import 'package:music_app_work/provider/key_provider.dart';
 import 'package:music_app_work/widget/my_text_field.dart';
 
 var kLocalTextStyle = TextStyle(
@@ -10,14 +11,19 @@ var kLocalTextStyle = TextStyle(
 );
 
 class RoomScreen extends StatefulWidget {
-  const RoomScreen({Key? key}) : super(key: key);
+  const RoomScreen({Key? key, required this.drawerKey}) : super(key: key);
+
+  final GlobalKey<ScaffoldState> drawerKey;
 
   @override
   State<RoomScreen> createState() => _RoomScreenState();
 }
 
-class _RoomScreenState extends State<RoomScreen> {
-  int _index = 2;
+class _RoomScreenState extends State<RoomScreen>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+
+  int _index = 0;
   List<String> title = [
     'Room',
     'Songs',
@@ -27,12 +33,34 @@ class _RoomScreenState extends State<RoomScreen> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+
+    _tabController = TabController(vsync: this, length: title.length);
+
+    _tabController.addListener(() {
+      setState(() {
+        _index = _tabController.index;
+      });
+      print("Selected Index: " + _tabController.index.toString());
+    });
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.black,
-        body: SingleChildScrollView(
-          child: SizedBox(
+    print("Selected Index: $_index");
+
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: Stack(
+        children: [
+          SizedBox(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
             child: Padding(
@@ -40,16 +68,21 @@ class _RoomScreenState extends State<RoomScreen> {
                   .copyWith(top: 123 / 3),
               child: DefaultTabController(
                 length: 5,
-                initialIndex: 2,
+                initialIndex: 0,
                 child: Center(
                   child: Column(
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Image(
-                            image: AssetImage('assets/room/menu.png'),
-                            width: 48 / 3,
+                          InkWell(
+                            onTap: () {
+                              widget.drawerKey.currentState!.openDrawer();
+                            },
+                            child: Image(
+                              image: AssetImage('assets/room/menu.png'),
+                              width: 48 / 3,
+                            ),
                           ),
                           Text(
                             title[_index],
@@ -63,6 +96,7 @@ class _RoomScreenState extends State<RoomScreen> {
                       ),
                       SizedBox(height: 77 / 3),
                       TabBar(
+                        controller: _tabController,
                         isScrollable: true,
                         indicatorColor: Colors.transparent,
                         unselectedLabelColor: Colors.white.withOpacity(0.5),
@@ -74,11 +108,6 @@ class _RoomScreenState extends State<RoomScreen> {
                           Text('Artist', style: kLocalTextStyle),
                           Text('Album', style: kLocalTextStyle)
                         ],
-                        onTap: (val) {
-                          setState(() {
-                            _index = val;
-                          });
-                        },
                       ),
                       SizedBox(height: 36 / 3),
                       MyTextField(
@@ -90,6 +119,7 @@ class _RoomScreenState extends State<RoomScreen> {
                       SizedBox(height: 57 / 3),
                       Expanded(
                         child: TabBarView(
+                          controller: _tabController,
                           children: [
                             SingleChildScrollView(child: allWidget(context)),
                             SingleChildScrollView(child: songsWidget(context)),
@@ -106,7 +136,7 @@ class _RoomScreenState extends State<RoomScreen> {
               ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }
@@ -121,11 +151,13 @@ class MyStack extends StatelessWidget {
     this.height = 367,
     required this.text,
     this.isPlay = true,
+    this.text2 = '',
+    this.isAlbum = false,
   }) : super(key: key);
 
-  final String image, src, text;
+  final String image, src, text, text2;
   final double width, height;
-  final bool isPlay;
+  final bool isPlay, isAlbum;
 
   @override
   Widget build(BuildContext context) {
@@ -158,6 +190,15 @@ class MyStack extends StatelessWidget {
             fontSize: 45 / 3,
           ),
         ),
+        if (isAlbum)
+          Text(
+            text2,
+            style: kTextStyle.copyWith(
+              fontWeight: FontWeight.w500,
+              fontSize: 36 / 3,
+              color: Color(0xffA3A3A3),
+            ),
+          ),
       ],
     );
   }
@@ -166,8 +207,8 @@ class MyStack extends StatelessWidget {
 Widget allWidget(BuildContext context) {
   return Column(
     children: [
-      Align(
-        alignment: Alignment.centerLeft,
+      ClipRRect(
+        borderRadius: BorderRadius.circular(12),
         child: Image(
           image: AssetImage('assets/room/banner.png'),
           width: MediaQuery.of(context).size.width,
@@ -190,7 +231,10 @@ Widget allWidget(BuildContext context) {
               ),
               Text(
                 'View All',
-                style: kTextStyle.copyWith(fontSize: 40 / 3),
+                style: kTextStyle.copyWith(
+                  fontSize: 40 / 3,
+                  color: Colors.white.withOpacity(0.7),
+                ),
               )
             ],
           ),
@@ -200,7 +244,9 @@ Widget allWidget(BuildContext context) {
             child: Row(
               children: [
                 MyStack(image: 'a1', src: 'room', text: 'Sam Cook Live'),
+                SizedBox(width: 41 / 3),
                 MyStack(image: 'a2', src: 'room', text: 'YG Throw Your Set'),
+                SizedBox(width: 41 / 3),
                 MyStack(image: 'a3', src: 'room', text: 'Elli Mai Interview'),
               ],
             ),
@@ -214,7 +260,7 @@ Widget allWidget(BuildContext context) {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Most Popular',
+                'Recent Views',
                 style: kTextStyle.copyWith(
                   color: kRedColor,
                   fontSize: 50 / 3,
@@ -223,7 +269,10 @@ Widget allWidget(BuildContext context) {
               ),
               Text(
                 'View All',
-                style: kTextStyle.copyWith(fontSize: 40 / 3),
+                style: kTextStyle.copyWith(
+                  fontSize: 40 / 3,
+                  color: Colors.white.withOpacity(0.7),
+                ),
               )
             ],
           ),
@@ -233,7 +282,9 @@ Widget allWidget(BuildContext context) {
             child: Row(
               children: [
                 MyStack(image: 'b1', src: 'room', text: 'Sam Cook Live'),
+                SizedBox(width: 41 / 3),
                 MyStack(image: 'b2', src: 'room', text: 'YG Throw Your Set'),
+                SizedBox(width: 41 / 3),
                 MyStack(image: 'b3', src: 'room', text: 'Elli Mai Interview'),
               ],
             ),
@@ -270,6 +321,7 @@ Widget videosWidget(BuildContext context) {
           ),
         ],
       ),
+      SizedBox(height: 44.2 / 3),
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -289,6 +341,7 @@ Widget videosWidget(BuildContext context) {
           ),
         ],
       ),
+      SizedBox(height: 44.2 / 3),
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -300,7 +353,7 @@ Widget videosWidget(BuildContext context) {
             text: 'Just Beat It',
           ),
           MyStack(
-            image: 'c3',
+            image: 'c2',
             src: 'video',
             width: 500,
             height: 412,
@@ -385,5 +438,85 @@ Widget artistsWidget(BuildContext context) {
 }
 
 Widget albumsWidget(BuildContext context) {
-  return Column(children: []);
+  return Column(
+    children: [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          MyStack(
+            image: 'a1',
+            src: 'album',
+            width: 500,
+            height: 412,
+            text: 'Folklore',
+            isPlay: false,
+            isAlbum: true,
+            text2: 'Taylor Swift',
+          ),
+          MyStack(
+            image: 'a2',
+            src: 'album',
+            width: 500,
+            height: 412,
+            text: 'Ariana Grande',
+            isPlay: false,
+            isAlbum: true,
+            text2: 'Taylor Swift',
+          ),
+        ],
+      ),
+      SizedBox(height: 62.2 / 3),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          MyStack(
+            image: 'b1',
+            src: 'album',
+            width: 500,
+            height: 412,
+            text: 'Ed Sheeran',
+            isPlay: false,
+            isAlbum: true,
+            text2: 'Taylor Swift',
+          ),
+          MyStack(
+            image: 'b2',
+            src: 'album',
+            width: 500,
+            height: 412,
+            text: 'Billie Eilish',
+            isPlay: false,
+            isAlbum: true,
+            text2: 'Taylor Swift',
+          ),
+        ],
+      ),
+      SizedBox(height: 62.2 / 3),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          MyStack(
+            image: 'c1',
+            src: 'album',
+            width: 500,
+            height: 412,
+            text: 'Just Beat It',
+            isPlay: false,
+            isAlbum: true,
+            text2: 'Taylor Swift',
+          ),
+          MyStack(
+            image: 'c2',
+            src: 'album',
+            width: 500,
+            height: 412,
+            text: 'YG Throw Your Set',
+            isPlay: false,
+            isAlbum: true,
+            text2: 'Taylor Swift',
+          ),
+        ],
+      ),
+    ],
+  );
 }

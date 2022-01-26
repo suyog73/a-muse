@@ -29,6 +29,10 @@ flutter:
     - assets/bottom/
     - assets/video/
     - assets/artist/
+    - assets/album/
+    - assets/drawer/
+    - assets/spotlight/
+    - assets/mysong/
 
 
   fonts:

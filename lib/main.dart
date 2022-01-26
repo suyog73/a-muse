@@ -1,6 +1,7 @@
+// ignore_for_file: prefer_const_literals_to_create_immutables
+
 import 'package:flutter/material.dart';
-import 'package:music_app_work/screen/LoginScreen.dart';
-import 'package:music_app_work/screen/room_screen.dart';
+import 'package:music_app_work/screen/bottom_nav.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,9 +14,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(primarySwatch: Colors.blue, fontFamily: 'OpenSans'),
-      home: const RoomScreen(),
+      home: const BottomNav(),
     );
   }
 }
