@@ -61,7 +61,7 @@ class ProfileScreen extends StatelessWidget {
                 Column(
                   children: [
                     Padding(
-                      padding: kPadding,
+                      padding: kPadding.copyWith(top: size.height * 0.06),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -125,9 +125,10 @@ class ProfileScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           MyButton2(
-                              color: kRedColor,
-                              text: 'Follow',
-                              icon: 'follower'),
+                            color: kRedColor,
+                            text: 'Follow',
+                            icon: 'follower',
+                          ),
                           MyButton2(
                             color: Colors.transparent,
                             isBorder: true,

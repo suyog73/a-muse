@@ -55,6 +55,8 @@ class _RoomScreenState extends State<RoomScreen>
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
     return Scaffold(
       onDrawerChanged: (isOpened) {
         Provider.of<BottomNavProvider>(context, listen: false)
@@ -137,6 +139,7 @@ class _RoomScreenState extends State<RoomScreen>
                           ],
                         ),
                       ),
+                      // SizedBox(height: 57 / 3),
                     ],
                   ),
                 ),
@@ -193,7 +196,7 @@ class MyStack extends StatelessWidget {
         Text(
           text,
           style: kTextStyle.copyWith(
-            fontWeight: FontWeight.w500,
+            fontWeight: FontWeight.w700,
             fontSize: 45 / 3,
           ),
         ),
@@ -298,6 +301,7 @@ Widget allWidget(BuildContext context) {
           ),
         ],
       ),
+      SizedBox(height: 55 / 3),
     ],
   );
 }
@@ -307,24 +311,32 @@ Widget songsWidget(BuildContext context) {
 }
 
 Widget videosWidget(BuildContext context) {
+  Size size = MediaQuery.of(context).size * 3;
+
   return Column(
     children: [
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          MyStack(
-            image: 'a1',
-            src: 'video',
-            width: 500,
-            height: 412,
-            text: 'Sam Cook Live',
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: MyStack(
+              image: 'a1',
+              src: 'video',
+              width: size.width * 0.42,
+              height: 412,
+              text: 'Sam Cook Live',
+            ),
           ),
-          MyStack(
-            image: 'a2',
-            src: 'video',
-            width: 500,
-            height: 412,
-            text: 'YG Throw Your Set',
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: MyStack(
+              image: 'a2',
+              src: 'video',
+              width: size.width * 0.42,
+              height: 412,
+              text: 'YG Throw Your Set',
+            ),
           ),
         ],
       ),
@@ -335,14 +347,14 @@ Widget videosWidget(BuildContext context) {
           MyStack(
             image: 'b1',
             src: 'video',
-            width: 500,
+            width: size.width * 0.42,
             height: 412,
             text: 'Shine Bright Like...',
           ),
           MyStack(
             image: 'b2',
             src: 'video',
-            width: 500,
+            width: size.width * 0.42,
             height: 412,
             text: 'Rolling Into Deep',
           ),
@@ -355,14 +367,14 @@ Widget videosWidget(BuildContext context) {
           MyStack(
             image: 'c1',
             src: 'video',
-            width: 500,
+            width: size.width * 0.42,
             height: 412,
             text: 'Just Beat It',
           ),
           MyStack(
             image: 'c2',
             src: 'video',
-            width: 500,
+            width: size.width * 0.42,
             height: 412,
             text: 'YG Throw Your Set',
           ),
@@ -373,6 +385,7 @@ Widget videosWidget(BuildContext context) {
 }
 
 Widget artistsWidget(BuildContext context) {
+  Size size = MediaQuery.of(context).size * 3;
   return Column(
     children: [
       Row(
@@ -381,7 +394,7 @@ Widget artistsWidget(BuildContext context) {
           MyStack(
             image: 'a1',
             src: 'artist',
-            width: 500,
+            width: size.width * 0.42,
             height: 412,
             text: 'Taylor Swift',
             isPlay: false,
@@ -389,7 +402,7 @@ Widget artistsWidget(BuildContext context) {
           MyStack(
             image: 'a2',
             src: 'artist',
-            width: 500,
+            width: size.width * 0.42,
             height: 412,
             text: 'Ariana Grande',
             isPlay: false,
@@ -403,7 +416,7 @@ Widget artistsWidget(BuildContext context) {
           MyStack(
             image: 'b1',
             src: 'artist',
-            width: 500,
+            width: size.width * 0.42,
             height: 412,
             text: 'Ed Sheeran',
             isPlay: false,
@@ -411,7 +424,7 @@ Widget artistsWidget(BuildContext context) {
           MyStack(
             image: 'b2',
             src: 'artist',
-            width: 500,
+            width: size.width * 0.42,
             height: 412,
             text: 'Billie Eilish',
             isPlay: false,
@@ -425,7 +438,7 @@ Widget artistsWidget(BuildContext context) {
           MyStack(
             image: 'c1',
             src: 'artist',
-            width: 500,
+            width: size.width * 0.42,
             height: 412,
             text: 'Just Beat It',
             isPlay: false,
@@ -433,7 +446,7 @@ Widget artistsWidget(BuildContext context) {
           MyStack(
             image: 'c2',
             src: 'artist',
-            width: 500,
+            width: size.width * 0.42,
             height: 412,
             text: 'YG Throw Your Set',
             isPlay: false,
@@ -445,6 +458,8 @@ Widget artistsWidget(BuildContext context) {
 }
 
 Widget albumsWidget(BuildContext context) {
+  Size size = MediaQuery.of(context).size * 3;
+
   return Column(
     children: [
       Row(
@@ -453,7 +468,7 @@ Widget albumsWidget(BuildContext context) {
           MyStack(
             image: 'a1',
             src: 'album',
-            width: 500,
+            width: size.width * 0.42,
             height: 412,
             text: 'Folklore',
             isPlay: false,
@@ -463,12 +478,12 @@ Widget albumsWidget(BuildContext context) {
           MyStack(
             image: 'a2',
             src: 'album',
-            width: 500,
+            width: size.width * 0.42,
             height: 412,
             text: 'Ariana Grande',
             isPlay: false,
             isAlbum: true,
-            text2: 'Taylor Swift',
+            text2: 'Dua Lipa',
           ),
         ],
       ),
@@ -479,22 +494,22 @@ Widget albumsWidget(BuildContext context) {
           MyStack(
             image: 'b1',
             src: 'album',
-            width: 500,
+            width: size.width * 0.42,
             height: 412,
             text: 'Ed Sheeran',
             isPlay: false,
             isAlbum: true,
-            text2: 'Taylor Swift',
+            text2: 'After Hours',
           ),
           MyStack(
             image: 'b2',
             src: 'album',
-            width: 500,
+            width: size.width * 0.42,
             height: 412,
             text: 'Billie Eilish',
             isPlay: false,
             isAlbum: true,
-            text2: 'Taylor Swift',
+            text2: 'YHLQMDLG',
           ),
         ],
       ),
@@ -505,22 +520,22 @@ Widget albumsWidget(BuildContext context) {
           MyStack(
             image: 'c1',
             src: 'album',
-            width: 500,
+            width: size.width * 0.42,
             height: 412,
             text: 'Just Beat It',
             isPlay: false,
             isAlbum: true,
-            text2: 'Taylor Swift',
+            text2: 'After Hours',
           ),
           MyStack(
             image: 'c2',
             src: 'album',
-            width: 500,
+            width: size.width * 0.42,
             height: 412,
             text: 'YG Throw Your Set',
             isPlay: false,
             isAlbum: true,
-            text2: 'Taylor Swift',
+            text2: 'YHLQMDLG',
           ),
         ],
       ),

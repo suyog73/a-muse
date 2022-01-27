@@ -3,17 +3,13 @@
 import 'package:flutter/material.dart';
 import 'package:music_app_work/helpers/constants.dart';
 import 'package:music_app_work/provider/bottom_nav_provider.dart';
-import 'package:music_app_work/screen/bottom_nav.dart';
 import 'package:music_app_work/screen/my_song_screen.dart';
-import 'package:music_app_work/screen/room_screen.dart';
 import 'package:music_app_work/screen/setting_screen.dart';
 import 'package:provider/provider.dart';
 
 class MyAppDrawer extends StatefulWidget {
-  const MyAppDrawer({Key? key, this.isInside = false, this.select = -1})
-      : super(key: key);
+  const MyAppDrawer({Key? key, this.select = -1}) : super(key: key);
 
-  final bool isInside;
   final int select;
 
   @override
@@ -38,124 +34,128 @@ class _MyAppDrawerState extends State<MyAppDrawer> {
       height: size.height,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 78.8 / 3),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: 148 / 3),
-            Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: kRedColor, width: 3),
-                borderRadius: BorderRadius.circular(300),
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(300),
-                child: Image(
-                  image: AssetImage('assets/drawer/profile.png'),
-                  width: 224 / 3,
-                  height: 224 / 3,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 148 / 3),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: kRedColor, width: 3),
+                  borderRadius: BorderRadius.circular(300),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(300),
+                  child: Image(
+                    image: AssetImage('assets/drawer/profile.png'),
+                    width: 224 / 3,
+                    height: 224 / 3,
+                  ),
                 ),
               ),
-            ),
-            SizedBox(height: 27.3 / 3),
-            Text(
-              'Lana Del Rey',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 54 / 3,
-                fontWeight: FontWeight.w600,
+              SizedBox(height: 27.3 / 3),
+              Text(
+                'Lana Del Rey',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 54 / 3,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
-            ),
-            SizedBox(height: 7 / 3),
-            Text(
-              '@lanaroy',
-              style: TextStyle(
-                color: Colors.white.withOpacity(0.5),
-                fontSize: 42 / 3,
+              SizedBox(height: 7 / 3),
+              Text(
+                '@lanaroy',
+                style: TextStyle(
+                  color: Colors.white.withOpacity(0.5),
+                  fontSize: 42 / 3,
+                ),
               ),
-            ),
-            SizedBox(height: 163 / 3),
-            InkWell(
-              // onTap: () {
-              //   setState(() {
-              //     selected = 0;
-              //   });
-              //   Navigator.pushReplacement(
-              //     context,
-              //     MaterialPageRoute(
-              //       builder: (context) => BottomNav(),
-              //     ),
-              //   );
-              // },
-              child: DrawerMenu(
-                text: 'Home',
-                image: 'home',
+              SizedBox(height: 163 / 3),
+              InkWell(
+                // onTap: () {
+                //   setState(() {
+                //     selected = 0;
+                //   });
+                //   Navigator.pushReplacement(
+                //     context,
+                //     MaterialPageRoute(
+                //       builder: (context) => BottomNav(),
+                //     ),
+                //   );
+                // },
+                child: DrawerMenu(
+                  text: 'Home',
+                  image: 'home',
+                  color:
+                      selected == 0 ? kRedColor : Colors.white.withOpacity(0.5),
+                ),
+              ),
+              SizedBox(height: 132 / 3),
+              InkWell(
+                onTap: () {
+                  setState(() {
+                    selected = 1;
+                  });
+                  Provider.of<BottomNavProvider>(context, listen: false)
+                      .changeNavStatus(false);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MySongScreen(),
+                    ),
+                  );
+                },
+                child: DrawerMenu(
+                  text: 'My Songs',
+                  image: 'music',
+                  isRequire: true,
+                  value: '212',
+                  color:
+                      selected == 1 ? kRedColor : Colors.white.withOpacity(0.5),
+                ),
+              ),
+              SizedBox(height: 132 / 3),
+              DrawerMenu(
+                text: 'Video Feed',
+                image: 'video',
                 color:
-                    selected == 0 ? kRedColor : Colors.white.withOpacity(0.5),
+                    selected == 2 ? kRedColor : Colors.white.withOpacity(0.5),
               ),
-            ),
-            SizedBox(height: 132 / 3),
-            InkWell(
-              onTap: () {
-                setState(() {
-                  selected = 1;
-                });
-                Provider.of<BottomNavProvider>(context, listen: false)
-                    .changeNavStatus(false);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => MySongScreen(),
-                  ),
-                );
-              },
-              child: DrawerMenu(
-                text: 'My Songs',
-                image: 'music',
+              SizedBox(height: 132 / 3),
+              DrawerMenu(
+                text: 'Notifications',
+                image: 'bell',
                 isRequire: true,
-                value: '212',
+                value: '09',
                 color:
-                    selected == 1 ? kRedColor : Colors.white.withOpacity(0.5),
+                    selected == 3 ? kRedColor : Colors.white.withOpacity(0.5),
               ),
-            ),
-            SizedBox(height: 132 / 3),
-            DrawerMenu(
-              text: 'Video Feed',
-              image: 'video',
-              color: selected == 2 ? kRedColor : Colors.white.withOpacity(0.5),
-            ),
-            SizedBox(height: 132 / 3),
-            DrawerMenu(
-              text: 'Notification',
-              image: 'bell',
-              isRequire: true,
-              value: '09',
-              color: selected == 3 ? kRedColor : Colors.white.withOpacity(0.5),
-            ),
-            SizedBox(height: 132 / 3),
-            InkWell(
-              onTap: () {
-                setState(() {
-                  selected = 4;
-                });
-                Provider.of<BottomNavProvider>(context, listen: false)
-                    .changeNavStatus(false);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => SettingScreen(),
-                  ),
-                );
-              },
-              child: DrawerMenu(
-                text: 'Setting',
-                image: 'setting',
-                color:
-                    selected == 4 ? kRedColor : Colors.white.withOpacity(0.5),
+              SizedBox(height: 132 / 3),
+              InkWell(
+                onTap: () {
+                  setState(() {
+                    selected = 4;
+                  });
+                  Provider.of<BottomNavProvider>(context, listen: false)
+                      .changeNavStatus(false);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SettingScreen(),
+                    ),
+                  );
+                },
+                child: DrawerMenu(
+                  text: 'Setting',
+                  image: 'setting',
+                  color:
+                      selected == 4 ? kRedColor : Colors.white.withOpacity(0.5),
+                ),
               ),
-            ),
-            SizedBox(height: 132 / 3),
-            DrawerMenu(text: 'Log Out', image: 'log'),
-          ],
+              SizedBox(height: 132 / 3),
+              DrawerMenu(text: 'Log Out', image: 'log'),
+            ],
+          ),
         ),
       ),
     );
@@ -193,8 +193,9 @@ class DrawerMenu extends StatelessWidget {
             Text(
               text,
               style: TextStyle(
-                  color: color == Colors.white ? color.withOpacity(0.5) : color,
-                  fontSize: 52 / 3),
+                color: color == Colors.white ? color.withOpacity(0.5) : color,
+                fontSize: 52 / 3,
+              ),
             )
           ],
         ),

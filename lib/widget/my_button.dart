@@ -44,10 +44,12 @@ class MyButton2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
     return Container(
       alignment: Alignment.center,
       height: 132 / 3,
-      width: 489 / 3,
+      width: size.width * 0.4,
       decoration: BoxDecoration(
         color: color,
         borderRadius: BorderRadius.circular(66 / 3),

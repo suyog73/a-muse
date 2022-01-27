@@ -97,6 +97,7 @@ class _BottomNavState extends State<BottomNav> {
           controller: _controller,
           items: _navBarsItems(),
           backgroundColor: Color(0xff1A2025),
+          // backgroundColor: Colors.transparent,
           navBarStyle:
               NavBarStyle.style6 // Choose the nav bar style with this property.
           ),
