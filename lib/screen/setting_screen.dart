@@ -3,7 +3,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:music_app_work/helpers/constants.dart';
+import 'package:music_app_work/provider/bottom_nav_provider.dart';
 import 'package:music_app_work/widget/my_app_drawer.dart';
+import 'package:provider/provider.dart';
 
 class SettingScreen extends StatelessWidget {
   const SettingScreen({Key? key}) : super(key: key);
@@ -13,8 +15,12 @@ class SettingScreen extends StatelessWidget {
     final GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
 
     return Scaffold(
+      onDrawerChanged: (isOpened) {
+        Provider.of<BottomNavProvider>(context, listen: false)
+            .changeNavStatus(isOpened);
+      },
       key: _drawerKey,
-      drawer: MyAppDrawer(isInside: true, select: 4),
+      drawer: MyAppDrawer(select: 4),
       backgroundColor: Colors.black,
       body: Padding(
         padding: kPadding,
@@ -25,7 +31,11 @@ class SettingScreen extends StatelessWidget {
               children: [
                 InkWell(
                   onTap: () {
-                    _drawerKey.currentState!.openDrawer();
+                    Navigator.pop(context);
+
+                    Provider.of<BottomNavProvider>(context, listen: false)
+                        .changeNavStatus(true);
+                    // _drawerKey.currentState!.openDrawer();
                   },
                   child: Image(
                     image: AssetImage('assets/room/menu.png'),

@@ -1,10 +1,11 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:music_app_work/helpers/constants.dart';
+import 'package:music_app_work/provider/bottom_nav_provider.dart';
 import 'package:music_app_work/widget/my_app_drawer.dart';
 import 'package:music_app_work/widget/my_text_field.dart';
+import 'package:provider/provider.dart';
 
 class MySongScreen extends StatelessWidget {
   const MySongScreen({Key? key}) : super(key: key);
@@ -14,8 +15,12 @@ class MySongScreen extends StatelessWidget {
     final GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
 
     return Scaffold(
+      onDrawerChanged: (isOpened) {
+        Provider.of<BottomNavProvider>(context, listen: false)
+            .changeNavStatus(isOpened);
+      },
       key: _drawerKey,
-      drawer: MyAppDrawer(isInside: true, select: 1),
+      drawer: MyAppDrawer(select: 1),
       backgroundColor: Colors.black,
       body: Padding(
         padding: kPadding,
@@ -26,7 +31,10 @@ class MySongScreen extends StatelessWidget {
               children: [
                 InkWell(
                   onTap: () {
-                    _drawerKey.currentState!.openDrawer();
+                    Navigator.pop(context);
+
+                    Provider.of<BottomNavProvider>(context, listen: false)
+                        .changeNavStatus(true);
                   },
                   child: Image(
                     image: AssetImage('assets/room/menu.png'),

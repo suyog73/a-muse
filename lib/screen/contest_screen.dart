@@ -2,11 +2,19 @@
 
 import 'package:flutter/material.dart';
 import 'package:music_app_work/helpers/constants.dart';
+import 'package:music_app_work/provider/bottom_nav_provider.dart';
+import 'package:music_app_work/widget/my_app_drawer.dart';
+import 'package:provider/provider.dart';
 
-class ContestScreen extends StatelessWidget {
-  const ContestScreen({Key? key, required this.drawerKey}) : super(key: key);
+class ContestScreen extends StatefulWidget {
+  const ContestScreen({Key? key}) : super(key: key);
 
-  final GlobalKey<ScaffoldState> drawerKey;
+  @override
+  State<ContestScreen> createState() => _ContestScreenState();
+}
+
+class _ContestScreenState extends State<ContestScreen> {
+  final GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -14,6 +22,12 @@ class ContestScreen extends StatelessWidget {
         "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500";
 
     return Scaffold(
+      onDrawerChanged: (isOpened) {
+        Provider.of<BottomNavProvider>(context, listen: false)
+            .changeNavStatus(isOpened);
+      },
+      key: _drawerKey,
+      drawer: MyAppDrawer(),
       backgroundColor: Colors.black,
       body: Padding(
         padding: kPadding,
@@ -25,7 +39,7 @@ class ContestScreen extends StatelessWidget {
               children: [
                 InkWell(
                   onTap: () {
-                    drawerKey.currentState!.openDrawer();
+                    _drawerKey.currentState!.openDrawer();
                   },
                   child: Image(
                     image: AssetImage('assets/room/menu.png'),

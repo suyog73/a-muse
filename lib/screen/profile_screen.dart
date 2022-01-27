@@ -4,22 +4,25 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:music_app_work/helpers/constants.dart';
-import 'package:music_app_work/provider/key_provider.dart';
+import 'package:music_app_work/provider/bottom_nav_provider.dart';
+import 'package:music_app_work/widget/my_app_drawer.dart';
 import 'package:music_app_work/widget/my_button.dart';
 
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({Key? key, required this.drawerKey}) : super(key: key);
-
-  final GlobalKey<ScaffoldState> drawerKey;
+  const ProfileScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
+
     Size size = MediaQuery.of(context).size;
 
     String description =
         'Singers read, memorize, and perform music to live audiences or in the studio. They may receive formal education and training, or rely purely on raw talent and hard work. ';
 
     return Scaffold(
+      key: _drawerKey,
+      drawer: MyAppDrawer(),
       backgroundColor: Colors.black,
       body: SizedBox(
         height: size.height,

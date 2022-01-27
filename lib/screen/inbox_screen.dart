@@ -2,16 +2,30 @@
 
 import 'package:flutter/material.dart';
 import 'package:music_app_work/helpers/constants.dart';
+import 'package:music_app_work/provider/bottom_nav_provider.dart';
+import 'package:music_app_work/widget/my_app_drawer.dart';
 import 'package:music_app_work/widget/my_inbox_row.dart';
+import 'package:provider/provider.dart';
 
-class InboxScreen extends StatelessWidget {
-  const InboxScreen({Key? key, required this.drawerKey}) : super(key: key);
+class InboxScreen extends StatefulWidget {
+  const InboxScreen({Key? key}) : super(key: key);
 
-  final GlobalKey<ScaffoldState> drawerKey;
+  @override
+  State<InboxScreen> createState() => _InboxScreenState();
+}
+
+class _InboxScreenState extends State<InboxScreen> {
+  final GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      onDrawerChanged: (isOpened) {
+        Provider.of<BottomNavProvider>(context, listen: false)
+            .changeNavStatus(isOpened);
+      },
+      key: _drawerKey,
+      drawer: MyAppDrawer(),
       backgroundColor: Colors.black,
       body: Padding(
         padding: kPadding,
@@ -23,7 +37,7 @@ class InboxScreen extends StatelessWidget {
                 children: [
                   InkWell(
                     onTap: () {
-                      drawerKey.currentState!.openDrawer();
+                      _drawerKey.currentState!.openDrawer();
                     },
                     child: Image(
                       image: AssetImage('assets/room/menu.png'),

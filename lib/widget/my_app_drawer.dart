@@ -2,10 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:music_app_work/helpers/constants.dart';
+import 'package:music_app_work/provider/bottom_nav_provider.dart';
 import 'package:music_app_work/screen/bottom_nav.dart';
 import 'package:music_app_work/screen/my_song_screen.dart';
 import 'package:music_app_work/screen/room_screen.dart';
 import 'package:music_app_work/screen/setting_screen.dart';
+import 'package:provider/provider.dart';
 
 class MyAppDrawer extends StatefulWidget {
   const MyAppDrawer({Key? key, this.isInside = false, this.select = -1})
@@ -73,24 +75,17 @@ class _MyAppDrawerState extends State<MyAppDrawer> {
             ),
             SizedBox(height: 163 / 3),
             InkWell(
-              onTap: () {
-                setState(() {
-                  selected = 0;
-                });
-                widget.isInside
-                    ? Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => BottomNav(newIndex: 5),
-                        ),
-                      )
-                    : Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => BottomNav(newIndex: 5),
-                        ),
-                      );
-              },
+              // onTap: () {
+              //   setState(() {
+              //     selected = 0;
+              //   });
+              //   Navigator.pushReplacement(
+              //     context,
+              //     MaterialPageRoute(
+              //       builder: (context) => BottomNav(),
+              //     ),
+              //   );
+              // },
               child: DrawerMenu(
                 text: 'Home',
                 image: 'home',
@@ -104,19 +99,14 @@ class _MyAppDrawerState extends State<MyAppDrawer> {
                 setState(() {
                   selected = 1;
                 });
-                widget.isInside
-                    ? Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => MySongScreen(),
-                        ),
-                      )
-                    : Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => MySongScreen(),
-                        ),
-                      );
+                Provider.of<BottomNavProvider>(context, listen: false)
+                    .changeNavStatus(false);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MySongScreen(),
+                  ),
+                );
               },
               child: DrawerMenu(
                 text: 'My Songs',
@@ -147,19 +137,14 @@ class _MyAppDrawerState extends State<MyAppDrawer> {
                 setState(() {
                   selected = 4;
                 });
-                widget.isInside
-                    ? Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => SettingScreen(),
-                        ),
-                      )
-                    : Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => SettingScreen(),
-                        ),
-                      );
+                Provider.of<BottomNavProvider>(context, listen: false)
+                    .changeNavStatus(false);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SettingScreen(),
+                  ),
+                );
               },
               child: DrawerMenu(
                 text: 'Setting',

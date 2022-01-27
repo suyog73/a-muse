@@ -2,8 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:music_app_work/helpers/constants.dart';
-import 'package:music_app_work/provider/key_provider.dart';
+import 'package:music_app_work/provider/bottom_nav_provider.dart';
+import 'package:music_app_work/widget/my_app_drawer.dart';
 import 'package:music_app_work/widget/my_text_field.dart';
+import 'package:provider/provider.dart';
 
 var kLocalTextStyle = TextStyle(
   fontSize: 54 / 3,
@@ -11,9 +13,7 @@ var kLocalTextStyle = TextStyle(
 );
 
 class RoomScreen extends StatefulWidget {
-  const RoomScreen({Key? key, required this.drawerKey}) : super(key: key);
-
-  final GlobalKey<ScaffoldState> drawerKey;
+  const RoomScreen({Key? key}) : super(key: key);
 
   @override
   State<RoomScreen> createState() => _RoomScreenState();
@@ -21,6 +21,8 @@ class RoomScreen extends StatefulWidget {
 
 class _RoomScreenState extends State<RoomScreen>
     with SingleTickerProviderStateMixin {
+  final GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
+
   late TabController _tabController;
 
   int _index = 0;
@@ -42,7 +44,6 @@ class _RoomScreenState extends State<RoomScreen>
       setState(() {
         _index = _tabController.index;
       });
-      print("Selected Index: " + _tabController.index.toString());
     });
   }
 
@@ -54,9 +55,13 @@ class _RoomScreenState extends State<RoomScreen>
 
   @override
   Widget build(BuildContext context) {
-    print("Selected Index: $_index");
-
     return Scaffold(
+      onDrawerChanged: (isOpened) {
+        Provider.of<BottomNavProvider>(context, listen: false)
+            .changeNavStatus(isOpened);
+      },
+      key: _drawerKey,
+      drawer: MyAppDrawer(),
       backgroundColor: Colors.black,
       body: Stack(
         children: [
@@ -76,7 +81,10 @@ class _RoomScreenState extends State<RoomScreen>
                         children: [
                           InkWell(
                             onTap: () {
-                              widget.drawerKey.currentState!.openDrawer();
+                              // Provider.of<BottomNavProvider>(context,
+                              //         listen: false)
+                              //     .changeNavStatus(false);
+                              _drawerKey.currentState!.openDrawer();
                             },
                             child: Image(
                               image: AssetImage('assets/room/menu.png'),
