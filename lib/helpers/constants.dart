@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 
 const kRedColor = Color(0xffE02648);
+var kPadding = EdgeInsets.symmetric(horizontal: 50 / 3).copyWith(top: 123 / 3);
 
 var kTextFormFieldAuthDec = InputDecoration(
   hintStyle: TextStyle(

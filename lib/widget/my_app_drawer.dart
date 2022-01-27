@@ -81,13 +81,13 @@ class _MyAppDrawerState extends State<MyAppDrawer> {
                     ? Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => BottomNav(),
+                          builder: (context) => BottomNav(newIndex: 5),
                         ),
                       )
                     : Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => BottomNav(),
+                          builder: (context) => BottomNav(newIndex: 5),
                         ),
                       );
               },

@@ -17,8 +17,7 @@ class SettingScreen extends StatelessWidget {
       drawer: MyAppDrawer(isInside: true, select: 4),
       backgroundColor: Colors.black,
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 50 / 3)
-            .copyWith(top: 123 / 3),
+        padding: kPadding,
         child: Column(
           children: [
             Row(

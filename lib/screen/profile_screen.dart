@@ -58,8 +58,7 @@ class ProfileScreen extends StatelessWidget {
                 Column(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 49 / 3)
-                          .copyWith(top: 120 / 3),
+                      padding: kPadding,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [

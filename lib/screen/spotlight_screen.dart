@@ -14,8 +14,7 @@ class SpotlightScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.black,
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 50 / 3)
-            .copyWith(top: 123 / 3),
+        padding: kPadding,
         child: Column(
           children: [
             Row(

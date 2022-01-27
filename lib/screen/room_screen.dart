@@ -64,8 +64,7 @@ class _RoomScreenState extends State<RoomScreen>
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 50 / 3)
-                  .copyWith(top: 123 / 3),
+              padding: kPadding,
               child: DefaultTabController(
                 length: 5,
                 initialIndex: 0,
@@ -517,6 +516,7 @@ Widget albumsWidget(BuildContext context) {
           ),
         ],
       ),
+      SizedBox(height: 62.2 / 3),
     ],
   );
 }
