@@ -1,4 +1,4 @@
-# music_app_work
+# A-Muse
 
 Creating a Music App UI.
 
